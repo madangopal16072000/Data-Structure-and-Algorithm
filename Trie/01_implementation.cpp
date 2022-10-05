@@ -87,14 +87,14 @@ void Trie::uniquePrefix(char *w)
 int main()
 {
     Trie t;
-    char words[][10] = {"cobra", "dog", "duck", "dove", "ducken"};
+    char words[][10] = {"bad", "dad", "mad"};
     char w[10];
-    cout << "Enter word : ";
-    cin >> w;
     for(int i=0; i<5; i++)
     t.insert(words[i]);
 
-    t.uniquePrefix(w);
+    cout << "Enter word : ";
+    cin >> w;
+    // t.uniquePrefix(w);
     if(t.find(w))
     cout << "Present" << endl;
     else
