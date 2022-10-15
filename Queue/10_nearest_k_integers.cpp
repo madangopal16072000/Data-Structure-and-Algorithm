@@ -10,45 +10,23 @@ public:
         int idx = p - arr.begin();
         multiset<int> ms;
         int i, j, cnt;
-        // if (*p == x)
-        // {
-            i = idx - 1;
-            j = idx;
-            cnt = 0;
-            while (i >= 0 && j < n && cnt < k)
+        i = idx - 1;
+        j = idx;
+        cnt = 0;
+        while (i >= 0 && j < n && cnt < k)
+        {
+            if (abs(arr[i] - x) <= abs(arr[j] - x))
             {
-                if (abs(arr[i] - x) <= abs(arr[j] - x))
-                {
-                    ms.insert(arr[i]);
-                    i--;
-                }
-                else
-                {
-                    ms.insert(arr[j]);
-                    j++;
-                }
-                cnt++;
+                ms.insert(arr[i]);
+                i--;
             }
-        // }
-        // else
-        // {
-        //     i = idx - 1;
-        //     j = idx;
-        //     while (i >= 0 && j < n && cnt < k)
-        //     {
-        //         if (abs(arr[i] - x) <= abs(arr[j] - x))
-        //         {
-        //             ms.insert(arr[i]);
-        //             i--;
-        //         }
-        //         else
-        //         {
-        //             ms.insert(arr[j]);
-        //             j++;
-        //         }
-        //         cnt++;
-        //     }
-        // }
+            else
+            {
+                ms.insert(arr[j]);
+                j++;
+            }
+            cnt++;
+        }
         if (cnt != k)
         {
             while (i >= 0 && cnt < k)

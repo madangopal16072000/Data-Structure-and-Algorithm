@@ -76,6 +76,10 @@ public:
     }
     TreeNode *addOneRow(TreeNode *root, int val, int depth)
     {
+        if(depth == 1)
+        {
+            TreeNode *temp = new TreeNode(val, root, nullptr);
+        }
         queue<pair<TreeNode *, int>> q;
         q.push({root, 1});
         vector<TreeNode *> vec;
