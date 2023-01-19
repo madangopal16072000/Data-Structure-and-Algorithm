@@ -64,7 +64,7 @@ void infixToPostfix(char *str,char *postfix)
 
 int main()
 {
-    char str[] = "a+b*c-d/e";
+    char str[] = "a+b*(c^d-e)^(f+g*h)-i";
     char *postfix = new char[50];
     infixToPostfix(str, postfix);
     cout << postfix << endl;

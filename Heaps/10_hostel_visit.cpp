@@ -6,7 +6,7 @@ int main()
 {
     int Q, k;
     cin >> Q >> k;
-    priority_queue<int> pq;
+    priority_queue<long long> pq;
     while (Q--)
     {
         int type;
