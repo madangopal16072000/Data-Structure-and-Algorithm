@@ -1,3 +1,4 @@
+6
+5 2 4 6 6 3
 3
-geeikistest geeksforgeeks geeksfortest
-geeips
+12 4 8 1 6 3
