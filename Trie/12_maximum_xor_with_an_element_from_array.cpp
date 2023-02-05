@@ -3,7 +3,7 @@ using namespace std;
 struct Node
 {
     int data;
-    unordered_map<int, Node *> children;
+    Node *children[2] = {nullptr};
     bool terminal;
 
     Node(int data)
@@ -39,7 +39,7 @@ public:
         for (int i = 31; i >= 0; i--)
         {
             int bit = (num >> i) & 1;
-            if (temp->children.count(bit) == 0)
+            if (temp->children[bit] == nullptr)
             {
                 Node *newNode = new Node(bit);
                 temp->children[bit] = newNode;
@@ -57,7 +57,7 @@ public:
         {
             int bit = (num >> i) & 1;
 
-            if (temp->children.count(1 - bit))
+            if (temp->children[1 - bit] != nullptr)
             {
                 ans = ans + (1 << i);
                 temp = temp->children[1 - bit];
@@ -74,28 +74,34 @@ public:
 
         sort(nums.begin(), nums.end());
 
+        for (int i = 0; i < queries.size(); i++)
+        {
+            queries[i].push_back(i);
+        }
         sort(queries.begin(), queries.end(), compare);
 
         int n = nums.size();
         int m = queries.size();
-        vector<int> ans;
+        vector<int> ans(m, -1);
         Node *temp = root;
         int j = 0;
         for (int i = 0; i < m; i++)
         {
             int first = queries[i][0];
             int second = queries[i][1];
-
+            int third = queries[i][2];
             int idx = upper_bound(nums.begin(), nums.end(), second) - nums.begin();
 
             for (; j < idx && j < n; j++)
             {
                 insert(nums[j]);
             }
-            int curr;
-            if (temp->children.size() > 0)
+            int curr = -1;
+
+            if (temp->children[0] != nullptr || temp->children[1] != nullptr)
                 curr = maxXOR(first);
-            ans.push_back(curr);
+
+            ans[third] = curr;
         }
         return ans;
     }
