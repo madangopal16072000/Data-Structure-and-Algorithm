@@ -26,7 +26,7 @@ public:
         build(s, mid, 2 * node + 1, v);
         build(mid + 1, e, 2 * node + 2, v);
 
-        st[node].first = max(st[2 * node + 1].first, max(st[2 * node + 1].first, st[2 * node + 1].second + st[2 * node + 2].second));
+        st[node].first = max(st[2 * node + 1].first, max(st[2 * node + 2].first, st[2 * node + 1].second + st[2 * node + 2].second));
         st[node].second = max(st[2 * node + 1].second, st[2 * node + 2].second);
         return;
     }
@@ -110,5 +110,8 @@ int main()
     }
     SegmentTree t(n);
     t.build(v);
+    cout << t.query(2, 5) << endl;
+    t.update(3, 9);
+    cout << t.query(2, 5) << endl;
     return 0;
 }
