@@ -20,7 +20,7 @@ public:
                 mp[fruits[i]]--;
                 if (mp[fruits[i]] == 0)
                 {
-                    mp.erase(mp[fruits[i]]);
+                    mp.erase(fruits[i]);
                 }
 
                 i++;

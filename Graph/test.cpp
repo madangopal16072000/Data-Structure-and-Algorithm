@@ -1,102 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-class Graph
-{
-    unordered_map<int, list<int>> l;
-
-public:
-    void addEdge(int x, int y)
-    {
-        l[x].push_back(y);
-    }
-    int bfs(int src, int dest)
-    {
-        unordered_map<int, int> dist;
-        queue<int> q;
-
-        for (auto nodePair : l)
-        {
-            int node = nodePair.first;
-            for (int nbr : l[node])
-                dist[nbr] = INT_MAX;
-        }
-
-        q.push(src);
-        dist[src] = 0;
-
-        while (!q.empty())
-        {
-            int node = q.front();
-            q.pop();
-
-            for (int nbr : l[node])
-            {
-                if (dist[nbr] == INT_MAX)
-                {
-                    q.push(nbr);
-                    dist[nbr] = dist[node] + 1;
-                }
-            }
-        }
-        return dist[dest];
-    }
-};
 class Solution
 {
 public:
-    int snakesAndLadders(vector<vector<int>> &board)
+    int unvisitedLeaves(int N, int leaves, vector<int> &frogs)
     {
-        int n = board.size();
-        vector<int> temp(n * n+1, 0);
-        int k = 1;
-        bool isOdd = true;
-
-        for (int i = n - 1; i >= 0; i--)
+        // Code here
+        vector<bool> visited(leaves + 1, false);
+        int cnt = 0;
+        for (int i = 0; i < N; i++)
         {
-            if (isOdd)
+            if (frogs[i] <= leaves)
             {
-                for (int j = 0; j < n; j++)
-                {
-                    if (board[i][j] != -1)
-                    {
-                        temp[k] = board[i][j] - k;
-                    }
-                    k++;
-                }
+                visited[frogs[i]] = true;
+                cnt++;
             }
-
-            if (!isOdd)
-            {
-                for (int j = n - 1; j >= 0; j--)
-                {
-                    if (board[i][j] != -1)
-                    {
-                        temp[k] = board[i][j] - k;
-                    }
-                    k++;
-                }
-            }
-            isOdd = !isOdd;
         }
-        Graph g;
-        for (int i = 1; i <= n * n; i++)
+
+        for (int i = 1; i <= leaves; i++)
         {
-            for (int dice = 1; dice <= 6; dice++)
+            if (visited[i] == true)
             {
-                int j = i + dice;
-                if(j > n*n)
-                break;
-                
-                j = j + temp[j];
-                if (j <= n*n)
+                for (int j = i + i; j <= leaves; j = j + i)
                 {
-                    g.addEdge(i, j);
+                    visited[j] = true;
+                    if (!visited[j])
+                        cnt++;
                 }
             }
         }
-        g.addEdge(n*n, n*n);
-        return g.bfs(1, n * n);
+        return leaves - cnt;
     }
 };
 int main()
@@ -105,24 +38,17 @@ int main()
     freopen("./input.txt", "r", stdin);
     freopen("./output.txt", "w", stdout);
 #endif
-
-    int n;
-    cin >> n;
-    vector<vector<int>> board;
-    for (int i = 0; i < n; i++)
+    int N, leaves;
+    cin >> N >> leaves;
+    vector<int> frogs;
+    for (int i = 0; i < N; i++)
     {
-        vector<int> row;
-        for (int j = 0; j < n; j++)
-        {
-            int d;
-            cin >> d;
-            row.push_back(d);
-        }
-        board.push_back(row);
+        int d;
+        cin >> d;
+        frogs.push_back(d);
     }
 
     Solution sln;
-    cout << sln.snakesAndLadders(board);
-    return 0;
+    cout << sln.unvisitedLeaves(N, leaves, frogs) << endl;
     return 0;
 }
